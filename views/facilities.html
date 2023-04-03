@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/facilities.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {% include 'header.html' %} {% include 'navigation.html' %}
+    <div id="facilites-container">
+        <div id="facilities-title"><span id="facilities-span">FACILITIES</span><br><span id="facilities-all">시설 전체 보기</span></div>
+        <div id="facilities-wrapper">
+            <div class="facilities" id="section1">
+                <div class="facilities-info">
+                    <span class="facility-type">FITNESS</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">THIRD FLOOR&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">PERIOD</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">상시 운영&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">07:00 ~ 23:00</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="facilities" id="section2">
+                <div class="facilities-info">
+                    <span class="facility-type">POOL</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">THIRD FLOOR&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">PERIOD</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">상시 운영&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">실내 07:00 ~ 22:00 / 야외 08:00 ~ 21:00</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="facilities" id="section3">
+                <div class="facilities-info">
+                    <span class="facility-type">SAUNA</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">THIRD FLOOR&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">PERIOD</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">상시 운영&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">07:00 ~ 23:00</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="facilities" id="section4">
+                <div class="facilities-info">
+                    <span class="facility-type">GIFT SHOP</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">GROUND FLOOR&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">PERIOD</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">상시 운영&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">10:00 ~ 20:00</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="facilities" id="section5">
+                <div class="facilities-info">
+                    <span class="facility-type">ENTERTAINMENT</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">B1 / SECOND FLOOR / SIXTH FLOOR&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">PERIOD</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">상시 운영&nbsp;&nbsp;&nbsp;</span>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">09:00 ~ 22:00</span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</html>

@@ -1,0 +1,13 @@
+<header>
+    <hgroup>
+        <a href="/"><img id="logo" src="/hotelyj.png" alt=""></a>
+        <a href="/reservation" class="hmenus">예약</a>
+        {% if user and user.uid%}
+        <a href="/auth/logout" class="hmenus">로그아웃</a>
+        <span id="username" class="hmenus"> {{user.uname}}&nbsp;님</span>
+        {% else %}
+        <a href="/auth/join" class="hmenus">회원가입</a>
+        <a href="/auth/login" class="hmenus">로그인</a>
+        {% endif %}
+    </hgroup>
+</header>

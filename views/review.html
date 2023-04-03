@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 id="studyabroad">STUDY ABROAD PROGRAMME - JAPAN</h2>
+<p id="japan">일본 현지 학기제 - 후기</p>
+<div id="review-container">
+    <input type="text" style="display: none;" value="{{user.uid}}" id="uid">
+    {%if user and user.uid%}
+    <a class="btn" href="/about/study/review_write">글 작성</a>
+    {%endif%}
+  <table>
+    <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>날짜</th>
+            {%if user and user.uid%}
+            <th>수정</th>
+            <th>삭제</th>
+            {%endif%}
+        </tr>
+    </thead>
+    <tbody id="review-list"></tbody>
+    <tfoot>
+    </tfoot>
+</table>
+<dl id="paging">
+</dl>
+</div>
+  <!-- <input type="button" value="글 작성" onclick="location.href='/overseas/review/post'"> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const id = document.querySelector('#uid').value;
+    window.onload = getReview(1);
+
+    async function writePage(count) {
+        try {
+            let totalPage = count / 10;
+            console.log(totalPage);
+            const dl = document.querySelector('#paging');
+            dl.innerHTML = '';
+            let nom = 1;
+            const dd = document.createElement('dd');
+            for (let i = totalPage; i > 0; i--) {
+                let a = document.createElement('a');
+                a.textContent = nom;
+                a.addEventListener('click', (e) => {
+                    const page = e.target.textContent;
+                    e.preventDefault();
+                    getReview(page);
+                });
+                dd.appendChild(a);
+                nom++;
+            }
+            dl.appendChild(dd);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function getReview(num) {
+        try {
+            const allReview = await axios.get(`/about/study/reviews`);
+            const ReviewCount = allReview.data;
+            const count = ReviewCount.length;
+
+            writePage(count);
+            const res = await axios.get(`/about/study/reviews/${num}`);
+            const reviews = res.data;
+            console.log(reviews);
+            const tbody = document.querySelector('#review-list');
+            tbody.innerHTML = '';
+            let post_num = 1 + (num - 1) * 10;
+            reviews.map((review) => {
+                const row = document.createElement('tr');
+                let td = document.createElement('td');
+                td.textContent = review.pindex;
+                td.style.display = 'none';
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = post_num;
+                row.appendChild(td);
+                post_num++;
+                td = document.createElement('td');
+                let a = document.createElement('a');
+                a.setAttribute('href', `/about/study/${review.pindex}/review`);
+                a.textContent = review.ptitle;
+                td.appendChild(a);
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = review.writer;
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = review.phits;
+                row.appendChild(td);
+                td = document.createElement('td');
+                const date = moment(review.createdAt);
+                td.textContent = date.format("YYYY-MM-DD");
+                row.appendChild(td);
+
+                td = document.createElement('td');
+                a = document.createElement('a');
+                a.setAttribute('href', `/about/study/${review.pindex}/review_update`)
+                a.textContent = '수정';
+                td.appendChild(a);
+                if (id != review.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+
+                const remove = document.createElement('button');
+                remove.textContent = '삭제';
+                remove.addEventListener('click', async() => {
+                    try {
+                        await axios.delete(`/about/study/${review.pindex}`);
+                        getReview()
+                    } catch (err) {
+                        console.error(err);
+                    }
+                });
+                td = document.createElement('td');
+                td.appendChild(remove);
+                if (id != review.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+                tbody.appendChild(row);
+            })
+        } catch (err) {
+            console.error(err);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="answer-container">
+    <div>
+        <input id="pindex" type="text" style="display: none;" value="{{question.pindex}}">
+        <h2>제목: {{question.ptitle}}</h2><br>
+        <div>
+            <dl style="display: block;">
+                <dt style="display: inline;">작성자 {{question.writer}} | </dt>
+                <dt style="display: inline;">{{question.phits}}회 | </dt>
+                <dt style="display: inline;">{{question.createdAt}}</dt>
+            </dl>
+        </div>
+        <br>
+    </div>
+    내용
+    <div>
+        <p>{{question.pcontent}}</p>
+    </div><br>
+    {% if comment %}
+    <div id="comment">
+        <input id="cindex" type="text" style="display: none;" value="{{comment.cindex}}">
+        <div>
+            답변
+        </div>
+        <div>
+            {{comment.comment}}
+        </div>
+        {%if user and user.uauth == 'Admin'%}
+        <div><button id="update">수정</button></div>
+        <div><button id="delete">삭제</button></div>
+        {%endif%}
+    </div>
+    {% elif user and user.uauth == 'Admin' %}
+    <div>
+        답변하기
+        <form id="answer" action="/about/qna/{{question.pindex}}/comment" method="post">
+            <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+            <br><button type="submit">답변</button>
+        </form>
+    </div>
+    {% endif %}
+    <a id="tolist" href="/about/qna">목록</a> {% endblock %} {% block script %}
+</div>
+<script>
+    const id = document.querySelector('#pindex').value;
+
+    document.querySelector('#update').addEventListener('click', async(e) => {
+        e.preventDefault();
+        const newComment = prompt('수정할 내용을 입력하세요');
+        if (!newComment) {
+            return alert('수정할 내용을 입력하세요');
+        }
+        try {
+            await axios.patch(`/about/qna/${id}/comment`, {
+                comment: newComment,
+            });
+            window.location.href = `/about/qna/${id}/question`;
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
+    document.querySelector('#delete').addEventListener('click', async(e) => {
+        e.preventDefault();
+        try {
+            await axios.delete(`/about/qna/${id}/comment`);
+            window.location.href = `/about/qna/${id}/question`;
+        } catch (err) {
+            console.error(err);
+        }
+    });
+</script>
+{% endblock %}

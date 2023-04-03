@@ -1,0 +1,23 @@
+{%extends 'layout.html'%} {% block content%}
+<h2 id="qna">Q&A</h2>
+<p id="qna-content">질문하기</p>
+<div id="board_write">
+    <div id="write_area">
+        <form id="question-form" action="/about/qna/write" method="post">
+            <div>
+                <textarea name="title" id="title" rows="1" cols="55" placeholder="제목" maxlength="100" style="resize: none;" required></textarea>
+            </div>
+            <div id="write-content">
+                <textarea name="question" id="question" rows="30" cols="100" placeholder="내용" style="resize: none;" required></textarea>
+            </div>
+            <!-- <input type="file" name="SelectFile" /> -->
+            <div id="write-btn">
+                <button type="submit">글 작성</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+</script>
+{% endblock %}

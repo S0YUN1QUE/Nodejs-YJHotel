@@ -1,0 +1,37 @@
+{%extends 'layout.html'%} {% block content%}
+<div id="board_write">
+    <div id="write_area">
+        <form id="question-form">
+            <input id="id" style="display: none;" value="{{question.pindex}}">
+            <div>
+                <textarea name="title" id="title" rows="1" cols="55" placeholder="제목" maxlength="100" style="resize: none;" required>{{question.ptitle}}</textarea>
+            </div>
+            <div id="write-content">
+                <textarea name="question" id="question" rows="30" cols="100" placeholder="내용" style="resize: none;" required>{{question.pcontent}}</textarea>
+            </div>
+            <!-- <input type="file" name="SelectFile" /> -->
+            <div id="write-btn">
+                <button type="submit">수정</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+    document.querySelector('#question-form').addEventListener('submit', async(e) => {
+        e.preventDefault();
+        const id = e.target.id.value;
+        const title = e.target.title.value;
+        const question = e.target.question.value;
+        try {
+            await axios.patch(`/about/qna/${id}`, {
+                ptitle: title,
+                pcontent: question
+            });
+            window.location.href = '/about/qna';
+        } catch (err) {
+            console.error(err);
+        }
+    });
+</script>
+{% endblock %}

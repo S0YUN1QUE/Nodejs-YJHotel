@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/bookinfo.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    <div id="container">
+        <h2 id="reservation">RESERVATION</h2>
+        <p id="my-book">예약하기</p>
+        <div id="info-container">
+            {% if user and user.uid %}
+                <div id="book-info">예약 정보</div>
+                <form id="bookinfoform">
+                <div id="info-table">
+                    <input type="hidden" name="reindex" id="reindex" value="{{reindex}}">
+                    <table>
+                        <tr>
+                            <td class="left" id="room">ROOM</td>
+                            <td class="left" id="date">DATE</td>
+                            <td id="guest">GUESTS</td>
+                            <td rowspan="2" id="rebook-td"><a href="/book" id="rebook">다시 선택하기</a></td>
+                        </tr>
+                        <tr>
+                            <td class="left"><input type="hidden" id="rname" name="rname" value="{{rname}}">{{rname}}</td>
+                            <td class="left" id="check" name="check"><input type="hidden" name="reci" id="reci" value="{{reci}}">{{reci}} ~ <input type="hidden" name="reco" id="reco" value="{{reco}}">{{reco}}&nbsp;|&nbsp;{{nights}}&nbsp;박</td>
+                            <td ><input type="hidden" id="reppl" name="reppl" value="{{reppl}}">{{reppl}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="booker-info">예약자 정보 입력</div>
+                <div id="info-wrapper">
+                    <table>
+                        <tr>
+                            <td class="bookers">이름</td>
+                            <td><input name="rename" type="text" placeholder="이름을 입력하세요" maxlength="20" required></td>
+                        </tr>
+                        <tr>
+                            <td class="bookers">연락처</td>
+                            <td><input name="recontact" type="text" title="전화번호를 입력하세요." placeholder="00*000*0000" maxlength="11" required></td>
+                        </tr>
+                        <tr>
+                            <td>조식</td>
+                            <td id="checkbf"><input type="checkbox" name="rebf" value="1">선택</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="makereserve">
+                    <button id="bookcomplete">완료</button>
+                </div>
+            </form>
+            {% else %}
+            <div id="noLogin">
+                <img src="" alt="">
+                <p id="needLogin">예약은 로그인 후 가능합니다.
+                   <br>로그인 해주세요.
+                </p>
+                <span><a href="/auth/login" id="goLogin">로그인 하기</a></span>
+            </div>
+            {% endif %}
+        </div>
+        {% include 'footer.html' %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.js" integrity="sha512-VnJVXpOlJZ9qp7za6z7yzGvoNSIzHpeLfGlg7LoAqiMSkglhSUDJrxeUmKBPH1LtPlcypv6NnNO4Bbx8fkBD+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const id = "admin";
+        
+        document.getElementById('bookinfoform').addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const reindex = e.target.reindex.value;
+            const rname = e.target.rname.value;
+            const reppl = e.target.reppl.value;
+            const reci = e.target.reci.value;
+            const reco = e.target.reco.value;
+            const rename = e.target.rename.value;
+            const recontact = e.target.recontact.value;
+            const rebf = e.target.rebf.checked;
+            console.log(reindex);
+            if (!rename) {
+                return alert('예약자 이름을 입력하세요');
+            }
+            if (!recontact) {
+                return alert('예약자 전화번호를 입력하세요');
+            }
+            if (reindex) {
+                try {
+                    await axios.patch(`/books/${id}/reservs`, { reindex, rname, reppl, reci, reco, rename, recontact, rebf })
+                    .then(() => {
+                        console.log(reindex, rname, reppl, reci, reco, rename, recontact, rebf);
+                        location.replace('/reservation/myreserv');
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+                } catch (err) {
+                    console.error(err);
+                }
+            } else {
+                try {
+                    await axios.post('/books', { rname, reppl, reci, reco, rename, recontact, rebf })
+                        .then(() => {
+                            location.replace('/reservation/myreserv');
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

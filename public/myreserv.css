@@ -1,0 +1,117 @@
+a {
+    text-decoration: none;
+}
+
+#container {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+}
+
+#reservation {
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+#searchMyreserv {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+#myreserv-container {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+}
+
+#noLogin {
+    width: 80%;
+    margin: 2% 10% 15% 10%;
+    flex-wrap: wrap;
+    border: solid 1px grey;
+    border-radius: 10px 10px;
+    padding: 2%;
+    text-align: center;
+}
+
+#needLogin { 
+    font-size: 26px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 100%;
+    line-height: 50px;
+}
+
+#goLogin {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 80px;
+    border-radius: 10px 10px;
+    font-size: 20px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#myreserv {
+    width: 70%;
+    border: 1px solid grey;
+    border-radius: 10px 10px;
+    margin: 2% 15%;
+    text-align: center;
+    flex-wrap: wrap;
+    padding: 1% 2%;
+}
+
+#showMyreserv {
+    width: 100%;
+}
+
+.myreservs > td {
+    border-top: 1px solid rgb(219, 219, 219);
+    font-size: 18px;
+    width: 23%;
+    line-height: 30px;
+}
+
+.myreservs > th {
+    font-size: 18px;
+    text-align: left;
+    line-height: 40px;
+}
+
+.t {
+    background-color: rgb(231, 248, 245);
+}
+
+#third > td {
+    border-bottom: 2px solid rgb(219, 219, 219);
+}
+
+#first > td {
+    border-top: 2px solid rgb(219, 219, 219);
+}
+
+#check {
+    width: 8%;
+    border-bottom: 2px solid rgb(219, 219, 219);
+}
+
+#rebook button {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 30px;
+    border-radius: 10px 10px;
+    margin: 2% 2% 12% 2%;
+    position: relative;
+    font-size: 20px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#all {
+    border: none;
+    text-align: right;
+}

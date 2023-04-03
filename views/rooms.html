@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/rooms.css">
+    <link rel="stylesheet" href="/menu.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    <div id="rooms-container">
+        <div id="rooms-title"><span id="rooms-span">ROOMS</span><br><span id="rooms-all">객실 전체 보기</span></div>
+        <div id="rooms-wrapper">
+            <div class="rooms" id="section1">
+                <div class="room-info">
+                    <span class="roomname">SUPERIOR</span><br>
+                    <span class="types">BED</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">더블</span><br>
+                    <span class="types">SIZE</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">27m²</span><br>
+                    <span class="types">ROOM FEATURES</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">침실1, 화장실1</span><br>
+                    <span class="types">CHECK-IN / CHECK-OUT</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">15:00 / 11:00</span><br>
+                    <span><a href="/reservation/book">예약하기</a></span>
+                </div>
+                <div>
+                    <img src="room-superior.jpg" alt="">
+                </div>
+            </div>
+            <div class="rooms" id="section2">
+                <div class="room-info">
+                    <span class="roomname">DELUXE</span><br>
+                    <span class="types">BED</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">트윈 / 킹</span><br>
+                    <span class="types">SIZE</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">33m²</span><br>
+                    <span class="types">ROOM FEATURES</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">침실1, 화장실1</span><br>
+                    <span class="types">CHECK-IN / CHECK-OUT</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">15:00 / 11:00</span><br>
+                    <span><a href="/reservation/book">예약하기</a></span>
+                </div>
+                <div>
+                    <img src="room-deluxe.jpg" alt="">
+                </div>
+            </div>
+            <div class="rooms" id="section3">
+                <div class="room-info">
+                    <span class="roomname">FAMILY</span><br>
+                    <span class="types">BED</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">킹, 트윈</span><br>
+                    <span class="types">SIZE</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">43m²</span><br>
+                    <span class="types">ROOM FEATURES</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">침실1, 화장실1</span><br>
+                    <span class="types">CHECK-IN / CHECK-OUT</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">15:00 / 11:00</span><br>
+                    <span><a href="/reservation/book">예약하기</a></span>
+                </div>
+                <div>
+                    <img src="room-family.jpg" alt="">
+                </div>
+            </div>
+            <div class="rooms" id="section4">
+                <div class="room-info">
+                    <span class="roomname">SUITE</span><br>
+                    <span class="types">BED</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">킹</span><br>
+                    <span class="types">SIZE</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">72m²</span><br>
+                    <span class="types">ROOM FEATURES</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">침실1, 거실1, 화장실1</span><br>
+                    <span class="types">CHECK-IN / CHECK-OUT</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">15:00 / 11:00</span><br>
+                    <span><a href="/reservation/book">예약하기</a></span>
+                </div>
+                <div>
+                    <img src="room-suite.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>

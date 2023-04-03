@@ -1,0 +1,168 @@
+#container {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+}
+
+#reservation {
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+#my-book {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+#info-container {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+#info-table {
+    margin: 0 0 2% 0;
+    background-color: rgb(243, 243, 243);
+    flex-wrap: wrap;
+    padding: 2% 0;
+}
+
+#book-info {
+    width: 80%;
+    margin: 2% 10% 1% 10%;
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#info-table > table {
+    width: 80%;
+    margin: 0 10%;
+    font-size: 22px;
+    line-height: 35px;
+    font-weight: lighter;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.left {
+    text-align: left;
+}
+
+#room {
+    width: 23%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#date {
+    width: 32%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#guest {
+    width: 27%;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#booker-info {
+    width: 80%;
+    margin: 1% 10%;
+    text-align: left;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#rebook {
+    color: black;
+}
+
+#rebook-td {
+    border: 1px solid black;
+    width: 18%;
+}
+
+#rebook-td:hover {
+    background-color: black;
+}
+
+#rebook:hover {
+    color: white;
+    text-decoration: none;
+}
+
+#info-wrapper {
+    width: 80%;
+    margin: 1% 10%;
+    flex-wrap: wrap;
+    border: solid 1px grey;
+    border-radius: 10px 10px;
+    padding: 2%;
+}
+
+#info-wrapper > table {
+    line-height: 50px;
+    font-size: 18px;
+    width: 50%;
+    font-weight: bold;
+}
+
+#info-wrapper > table > tr > td {
+    width: 20%;
+}
+
+#info-wrapper input {
+    font-size: 18px;
+}
+
+#bookcomplete {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 25px;
+    border-radius: 10px 10px;
+    font-size: 20px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 2% 0;
+}
+
+#noLogin {
+    width: 80%;
+    margin: 2% 10% 15% 10%;
+    flex-wrap: wrap;
+    border: solid 1px grey;
+    border-radius: 10px 10px;
+    padding: 2%;
+    text-align: center;
+}
+
+#needLogin { 
+    font-size: 26px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 100%;
+    line-height: 50px;
+}
+
+#goLogin {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 80px;
+    border-radius: 10px 10px;
+    font-size: 20px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#checkbf {
+    font-weight: lighter;
+    text-align: center;
+}

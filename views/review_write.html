@@ -1,0 +1,65 @@
+{%extends 'layout.html'%}
+{% block content%}
+<h2 id="studyabroad">STUDY ABROAD PROGRAMME - JAPAN</h2>
+<p id="japan">일본 현지 학기제 - 후기 작성하기</p>
+<div id="board_write">
+    <div id="write_area">
+        <form id="review-form" action="/about/study/review_write" method="post" enctype="multipart/form-data">
+          <div>
+              <textarea name="title" id="title" rows="1" cols="55" placeholder="제목" maxlength="100" style="resize: none;" required></textarea>
+          </div>
+          <div id="write-content">
+            <textarea name="review" id="review" rows="30" cols="100" placeholder="내용" style="resize: none;" required></textarea>
+          </div>
+          <div>
+          <!-- <form id="img-form" action="/about/study/img" method="post" enctype="multipart/form-data"> -->
+            <div class="img-preview">
+              <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+              <input id="img-url" type="hidden" name="url">
+            </div>
+            <div>
+              <input name="img" id="img" type="file" accept="image/*"> 
+            </div>
+          <!-- </form> -->
+          </div>
+          <div id="btn">
+              <button type="submit">글 작성</button>
+          </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  document.getElementById('review-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ptitle = e.target.title.value;
+    const pcontent = e.target.review.value;
+
+    try {
+      const post = await axios.post('/about/study/review_write', { ptitle, pcontent });
+      console.log('글 작성', post.data);
+      location.replace('/about/study/review');
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+  if (document.getElementById('img')) { // document.querySelectorAll('#img')
+  document.getElementById('img').addEventListener('change', function(e) {
+    const formData = new FormData();
+    console.log(this, this.files);
+    formData.append('img', this.files[0]);
+    axios.post('/about/study/img', formData)
+      .then((res) => {
+        document.getElementById('img-url').value = res.data.url;
+        document.getElementById('img-preview').src = res.data.url;
+        document.getElementById('img-preview').style.display = 'inline';
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+}
+</script>
+{% endblock %}

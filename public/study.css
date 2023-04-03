@@ -1,0 +1,171 @@
+#studyabroad {
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+#japan {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+#ul-container {
+    width: 100%;
+    margin: 2% 0 2% 0;
+    text-align: center;
+    padding: 2% 0;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+
+#video {
+    width: 80%;
+    margin: 2% 10% 5% 10%;
+}
+
+#ul-container > li {
+    display: inline-block;
+    margin: 0 2%;
+}
+
+#ul-container > li > a {
+    color: black;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#review-container {
+    margin-top: 5%;
+    margin-bottom: 18%;
+}
+
+#review-container > table {
+    width: 80%;
+    margin: 2% 10%;
+    font-size: 18px;
+    line-height: 40px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 1%;
+}
+
+#review-container th {
+    border-bottom: 2px solid grey;
+}
+
+.btn {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    width: 90%;
+    margin-left: 10%;
+}
+
+.btn:hover {
+    text-decoration: underline;
+}
+
+#board_write {
+    width: 80%;
+    margin: 3% 10%;
+    text-align: center;
+    border: 2px solid lightgrey;
+    border-radius: 20px;
+    padding: 2%;
+}
+
+#title {
+    font-size: 18px;
+    line-height: 30px;
+    width: 80%;
+    margin: 0 0 2% 0;
+}
+
+#write-content {
+    width: 100%;
+    border-top: 2px dashed grey;
+    border-bottom: 2px dashed grey;
+}
+
+#review {
+    font-size: 18px;
+    width: 80%;
+    margin: 3% 10%;
+}
+
+#btn {
+    margin-top: 3%;
+}
+
+#btn > button {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 20px;
+    border-radius: 10px 10px;
+    font-size: 18px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#img {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+}
+
+#review-list {
+    text-align: center;
+}
+
+#review-list a {
+    color: black;
+}
+
+#review-container button {
+    background-color: white;
+    padding: 10px 20px;
+    line-height: 20px;
+    border-radius: 10px 10px;
+    font-size: 18px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
+
+#answer-container {
+    width: 80%;
+    margin: 2% 10%;
+    text-align: center;
+    font-size: 20px;
+}
+
+#answer-container p {
+    font-weight: bold;
+}
+
+#answer-container button {
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 20px;
+    border-radius: 10px 10px;
+    font-size: 18px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+#comment {
+    width: 70%;
+    margin: 0 15%;
+}
+
+#tolist {
+    color: black;
+}
+
+#paging {
+    width: 100%;
+    text-align: center;
+}

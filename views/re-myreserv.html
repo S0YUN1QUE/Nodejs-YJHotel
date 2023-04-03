@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/myreserv.css">
+    <link rel="stylesheet" href="/menu.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    <div id="container">
+        <h2 id="reservation">RESERVATION</h2>
+        <p id="searchMyreserv">나의 예약 조회</p>
+        <div id="myreserv-container">
+            <div>
+                {% if user and user.uid %}
+                <form action="/reservation/book" method="post" id="myreservform" onsubmit="return getCheckedCnt();">
+                <div id="myreserv">
+                    <table id="showMyreserv">
+                        <tr id="myreservs" class="myreservs">
+                            <th colspan="4">예약 내역(<span id="renums">0</span>건)</th>
+                            <td id="all" style="visibility: hidden;">전체 선택&nbsp;<input type="checkbox" id="selectall" value="selectall" name="selectall" onclick="selectAll(this)"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="display: none;" id="rebook">
+                    <span><button id="change">예약 변경</button></span>
+                    <span><button type="button" id="delete">예약 취소</button type="button"></span>
+                </div>
+                </form>
+                {% else %}
+                <div id="noLogin">
+                    <img src="" alt="">
+                    <p id="needLogin">로그인 후 조회 가능합니다.
+                       <br>로그인 해주세요.
+                    </p>
+                    <span><a href="/auth/login" id="goLogin">로그인 하기</a></span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.js" integrity="sha512-VnJVXpOlJZ9qp7za6z7yzGvoNSIzHpeLfGlg7LoAqiMSkglhSUDJrxeUmKBPH1LtPlcypv6NnNO4Bbx8fkBD+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    getReserv();
+
+    async function getReserv() {
+        try {
+            const res = await axios.get(`/books/reservs`);
+            const reservs = res.data;
+            console.log(reservs);
+            if (reservs) {
+                const all = document.getElementById('all');
+                const rebook = document.getElementById('rebook');
+                all.style.visibility = 'visible';
+                rebook.style.display = 'inline';
+                reservs.map(function (reserv) {
+                    document.getElementById('renums').textContent = reserv.renums;
+                    const table = document.getElementById('showMyreserv');
+                    let row = document.createElement('tr');
+                    row.setAttribute('class', 'myreservs');
+                    row.setAttribute('id', 'first');
+                    td = document.createElement('td');
+                    let check = document.createElement('input');
+                    check.setAttribute('type', 'checkbox');
+                    check.setAttribute('value', `${reserv.reindex}`);
+                    check.setAttribute('name', 'reindex');
+                    check.setAttribute('id', 'reindex');
+                    check.setAttribute('onclick', 'checkSelectAll()');
+                    td.setAttribute('rowspan', '3');
+                    td.setAttribute('id', 'check');
+                    td.appendChild(check);
+                    row.append(td);
+                    td = document.createElement('td');
+                    td.setAttribute('class', 't');
+                    td.textContent = '예약자명';
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('id', 'rename');
+                    td.textContent = reserv.rename;
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('class', 't');
+                    td.textContent = '연락처';
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('id', 'contact');
+                    td.textContent = reserv.recontact;
+                    row.appendChild(td);
+                    table.appendChild(row);
+                    row = document.createElement('tr');
+                    row.setAttribute('class', 'myreservs');
+                    td = document.createElement('td');
+                    td.setAttribute('class', 't');
+                    td.textContent = '객실';
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('id', 'rname');
+                    td.textContent = reserv.rname;
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('class', 't');
+                    td.textContent = '인원';
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('id', 'reppl');
+                    td.textContent = reserv.reppl;
+                    row.appendChild(td);
+                    table.appendChild(row);
+                    row = document.createElement('tr');
+                    row.setAttribute('class', 'myreservs');
+                    row.setAttribute('id', 'third');
+                    td = document.createElement('td');
+                    td.setAttribute('class', 't');
+                    td.textContent = '예약 날짜';
+                    row.appendChild(td);
+                    td = document.createElement('td');
+                    td.setAttribute('colspan', '3');
+                    td.setAttribute('id', 'date');
+                    const reci = moment(reserv.reci);
+                    const reco = moment(reserv.reco);
+                    td.textContent = `${reci.format("YYYY-MM-DD 15:00:00")} ~ ${reco.format("YYYY-MM-DD 11:00:00")}`;
+                    row.appendChild(td);
+                    table.appendChild(row);
+                    row = document.createElement('tr');
+                    table.appendChild(row);
+                });
+            } else {
+                const all = document.getElementById('all');
+                const rebook = document.getElementById('rebook');
+                all.style.visibility = 'hidden';
+                rebook.style.display = 'none';
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    function checkSelectAll() {
+        const checkboxes = document.querySelectorAll('input[name="reindex"]');
+        const checked = document.querySelectorAll('input[name="reindex"]:checked');
+        const selectAll = document.querySelector('input[name="selectall"]');
+
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+    function selectAll(selectAll) {
+        const checkboxes = document.getElementsByName('reindex');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        });
+    }
+    
+    function getCheckedCnt()  {
+        const query = 'input[name="reindex"]:checked';
+        const selectedElements = document.querySelectorAll(query);
+        const selectedElementsCnt = selectedElements.length;
+        if (selectedElementsCnt > 1) {
+            alert('예약 변경 항목은 하나만 선택할 수 있습니다. 다시 선택하십시오.');
+            return false;
+        } else if (selectedElementsCnt === 0) {
+            alert('예약 변경 항목을 선택하십시오');
+            return false;
+        }
+      }
+
+      
+      document.getElementById('delete').addEventListener('click', async () => {
+          if (confirm('해당 항목을 삭제하시겠습니까?')) {
+            const elements = document.getElementsByName('reindex');
+            console.log(elements);
+            let check = [];
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].checked === true) {
+                    check[i] = elements[i].value;
+                    console.log('el' + elements[i]);
+                    console.log('check' + check);
+                }
+            }
+            const reindexes = check;
+            console.log(reindexes);
+            try {
+                reindexes.map(async function (reindex) {
+                    const id = reindex;
+                    await axios.delete(`/books/${id}/reservs`, {data: { reindex } })
+                        .then(() => {
+                            location.reload('/reservation/myreserv');
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        })
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    });
+</script>
+
+
+</html>

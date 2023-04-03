@@ -1,0 +1,65 @@
+.calendar {
+    margin: 3% 20%;
+    width: 60%;
+  }
+.sun{
+color:#ef3333;
+}
+.sat{
+color:#2107e0;
+}
+
+.calendar table tr td{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 28px;
+    }
+    
+.calendar table tr th{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+.active{
+background: #0b0809;
+border-radius: 50%;
+color: #ffffff;
+}
+
+.before {
+  color: grey;
+}
+
+#caption {
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 80px;
+  border-bottom: 1px solid grey;
+  border-top: 2px solid black;
+}
+
+#checkin {
+  margin: auto;
+  border-bottom: 2px solid black;
+}
+
+#buttons {
+  width: 20%;
+  margin: 0 40%;
+}
+
+#prevbtn {
+  float: left;
+  margin-top: 10%;
+}
+
+#nextbtn {
+  float: right;
+  margin-top: 10%;
+}

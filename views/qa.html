@@ -1,0 +1,258 @@
+{% extends 'layout.html'%} {% block content%}
+<h2 id="qna">Q&A</h2>
+<p id="qna-content">질문 보기</p>
+<div id="qna-container">
+    <input type="text" style="display: none;" value="{{user.uid}}" id="uid">
+    <form id="search">
+        <input type="text" placeholder="제목+내용" id="word">
+        <button type="submit">검색</button>
+    </form>
+    {% if user and user.uid %}
+    <a id="qa_write" class="btn" href="/about/qna/write">글 쓰기</a> {% endif %}
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>답변</th>
+                <th>조회수</th>
+                <th>날짜</th>
+                {%if user and user.uid%}
+                <th>수정</th>
+                <th>삭제</th>
+                {%endif%}
+            </tr>
+        </thead>
+        <tbody id="question-list">
+
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+    <dl id="paging">
+    </dl>
+</div>
+{% endblock %} {% block script%}
+<script>
+    const id = document.querySelector('#uid').value;
+    window.onload = getQuestion(1);
+
+
+
+    async function writePage(count) {
+        try {
+            let totalPage = count / 10;
+            console.log(totalPage);
+            const word = document.querySelector('#word');
+            const dl = document.querySelector('#paging');
+            dl.textContent = '';
+            let nom = 1;
+            const dd = document.createElement('dd');
+            for (let i = totalPage; i > 0; i--) {
+                let a = document.createElement('a');
+                a.textContent = nom;
+                a.addEventListener('click', (e) => {
+                    const page = e.target.textContent;
+                    e.preventDefault();
+                    getQuestion(page);
+                });
+                dd.appendChild(a);
+                nom++;
+            }
+            dl.appendChild(dd);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function writeSPage(count) {
+        try {
+            let totalPage = count / 10;
+            console.log(totalPage);
+            const word = document.querySelector('#word').value;
+            console.log(word);
+            const dl = document.querySelector('#paging');
+            dl.textContent = '';
+            let nom = 1;
+            const dd = document.createElement('dd');
+            for (let i = totalPage; i > 0; i--) {
+                let a = document.createElement('a');
+                a.textContent = nom;
+                a.addEventListener('click', (e) => {
+                    const page = e.target.textContent;
+                    e.preventDefault();
+                    searchQuestion(word, page);
+                });
+                dd.appendChild(a);
+                nom++;
+            }
+            dl.appendChild(dd);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async function getQuestion(nom) {
+        try {
+            const allQuestion = await axios.get(`/about/qna/question`);
+            const questionCount = allQuestion.data;
+            const count = questionCount.length;
+
+            const res = await axios.get(`/about/qna/question/${nom}`);
+            const questions = res.data;
+            console.log(questions);
+            writePage(count);
+            const tbody = document.querySelector('#question-list');
+            tbody.innerHTML = '';
+            let post_num = 1 + (nom - 1) * 10;
+            questions.map((question) => {
+                const row = document.createElement('tr');
+                let td = document.createElement('td');
+                td.textContent = question.pindex;
+                td.style.display = 'none';
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = post_num;
+                row.appendChild(td);
+                post_num++;
+                td = document.createElement('td');
+                let a = document.createElement('a');
+                a.setAttribute('href', `/about/qna/${question.pindex}/question`)
+                a.textContent = question.ptitle;
+                td.appendChild(a);
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.writer;
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.panswer ? '답변 완료' : '미답변';
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.phits;
+                row.appendChild(td);
+                td = document.createElement('td');
+                const date = moment(question.createdAt);
+                td.textContent = date.format("YYYY-MM-DD");
+                row.appendChild(td);
+
+                td = document.createElement('td');
+                a = document.createElement('a');
+                a.setAttribute('href', `/about/qna/${question.pindex}/update`);
+                a.textContent = '수정';
+                td.appendChild(a);
+                if (id != question.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+
+                const remove = document.createElement('button');
+                remove.textContent = '삭제';
+                remove.addEventListener('click', async() => {
+                    try {
+                        await axios.delete(`/about/qna/${question.pindex}`);
+                        location.reload();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                });
+                td = document.createElement('td');
+                td.appendChild(remove);
+                if (id != question.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+                tbody.appendChild(row);
+            })
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    document.querySelector('#search').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const word = e.target.word.value;
+        if (word) {
+            searchQuestion(word, 1);
+        } else {
+            getQuestion(1);
+        }
+    });
+
+    async function searchQuestion(word, nom) {
+        try {
+            const allQuestion = await axios.get(`/about/qna/search/${word}`);
+            const questionCount = allQuestion.data;
+            const count = questionCount.length;
+
+            const res = await axios.get(`/about/qna/search/${word}/${nom}`);
+            const questions = res.data;
+            writeSPage(count)
+            console.log(questions);
+            const tbody = document.querySelector('#question-list');
+            tbody.innerHTML = '';
+            let post_num = 1 + (nom - 1) * 10;
+            questions.map((question) => {
+                const row = document.createElement('tr');
+                let td = document.createElement('td');
+                td.textContent = question.pindex;
+                td.style.display = 'none';
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = post_num;
+                row.appendChild(td);
+                post_num++;
+                td = document.createElement('td');
+                let a = document.createElement('a');
+                a.setAttribute('href', `/about/qna/${question.pindex}/question`)
+                a.textContent = question.ptitle;
+                td.appendChild(a);
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.writer;
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.panswer ? '답변 완료' : '미답변';
+                row.appendChild(td);
+                td = document.createElement('td');
+                td.textContent = question.phits;
+                row.appendChild(td);
+                td = document.createElement('td');
+                const date = moment(question.createdAt);
+                td.textContent = date.format("YYYY-MM-DD");
+                row.appendChild(td);
+
+                td = document.createElement('td');
+                a = document.createElement('a');
+                a.setAttribute('href', `/about/qna/${question.pindex}/update`);
+                a.textContent = '수정';
+                td.appendChild(a);
+                if (id != question.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+
+                const remove = document.createElement('button');
+                remove.textContent = '삭제';
+                remove.addEventListener('click', async() => {
+                    try {
+                        await axios.delete(`/about/qna/${question.pindex}`);
+                        location.reload();
+                    } catch (err) {
+                        console.error(err);
+                    }
+                });
+                td = document.createElement('td');
+                td.appendChild(remove);
+                if (id != question.writerid) {
+                    td.style.display = 'none';
+                }
+                row.appendChild(td);
+                tbody.appendChild(row);
+            })
+        } catch (err) {
+            console.error(err);
+        }
+    }
+</script>
+{% endblock %}

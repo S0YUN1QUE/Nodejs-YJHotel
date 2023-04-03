@@ -1,0 +1,22 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="answer-container">
+    <div>
+        <input id="pindex" type="text" style="display: none;" value="{{review.pindex}}">
+        <h2>제목: {{review.ptitle}}</h2>
+        <div>
+            <dl style="display: block;">
+                <dt style="display: inline;">작성자 {{review.writer}} | </dt>
+                <dt style="display: inline;">{{review.phits}}회 | </dt>
+                <dt style="display: inline;">{{review.createdAt}}</dt>
+            </dl>
+        </div>
+        <br>
+    </div>
+    내용
+    <div>
+        <img src="/img/{{review.img}}" alt="" style="width: 500px;">
+        <p>{{review.pcontent}}</p>
+    </div><br>
+    
+    <a id="tolist" href="/about/study/review">목록</a> {% endblock %}
+</div>

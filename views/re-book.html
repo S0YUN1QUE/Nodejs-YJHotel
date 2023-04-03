@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/calendar.css">
+    <link rel="stylesheet" href="/book.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    <div id="container">
+        <h2 id="reservation">RESERVATION</h2>
+        <p id="my-book">예약하기</p>
+        <form action="/reservation/bookinfo" method="post" id="bookform">
+            <div id="book-container">
+                <div id="book-wrap">
+                        <input type="hidden" name="reindex" id="reindex" value="{{reindex}}">
+                    <table id="book-table">
+                        <tr>
+                            <td class="book-title">객실 및 인원 선택</td>
+                            <td class="book-content">객실&nbsp;
+                                <select onchange="roomValue(this)" name="rname" id="rname">
+                                    <option value="Deluxe" selected="selected">Deluxe(최대 2인)</option>
+                                    <option value="Superior">Superior(최대 2인)</option>
+                                    <option value="Family">Family(최대 4인)</option>
+                                    <option value="Suite">Suite(최대 6인)</option>
+                                </select>
+                                <span class="lines">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>인원&nbsp;
+                                <select onchange="pplValue(this)" name="reppl" id="reppl">
+                                    <option value="1">1</option>
+                                    <option value="2" selected="selected">2</option>
+                                    <option id="opt3" value="3" disabled>3</option>
+                                    <option id="opt4" value="4" disabled>4</option>
+                                    <option id="opt5" value="5" disabled>5</option>
+                                    <option id="opt6" value="6" disabled>6</option>
+                                </select>
+                                명<a class="openit" id="open-rooms">&nbsp;∨&nbsp;</a></td>
+                            </tr>
+                            <tr>
+                                <td class="book-title">투숙 기간 선택</td>                        
+                                <td id="recheck" name="recheck" class="book-content" colspan=><span id="checkchange"><input type="hidden" value="{{reci}}" id="reci" name="reci">{{reci}} ~ <input type="hidden" value="{{reco}}" id="reco" name="reco">{{reco}}<span class="lines" id="line">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="hidden" value="{{nights}}" name="nights" id="nights">{{nights}}&nbsp;박</span><a class="openit" id="open-cal">&nbsp;∨&nbsp;</a></td> 
+                            </tr>
+                    </table>
+                    {% include 're-calendar.html' %}
+                </div>
+                    <div id="toreserve">
+                        <button id="complete">예약하기</button>
+                    </div>
+            </div>
+        </form>
+        {% include 'footer.html' %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.js" integrity="sha512-VnJVXpOlJZ9qp7za6z7yzGvoNSIzHpeLfGlg7LoAqiMSkglhSUDJrxeUmKBPH1LtPlcypv6NnNO4Bbx8fkBD+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const currentTitle = document.getElementById('current-year-month');
+        const calendarBody = document.getElementById('calendar-body');
+        let today = new Date();
+        const thisDate = new Date();
+        let first = new Date(today.getFullYear(), today.getMonth(),1);
+        const dayList = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const monthList = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        const leapYear=[31,29,31,30,31,30,31,31,30,31,30,31];
+        const notLeapYear=[31,28,31,30,31,30,31,31,30,31,30,31];
+        let pageFirst = first;
+        let pageYear;
+        let reCheckIn;
+        let reCheckOut;
+
+        if((first.getFullYear() % 4 === 0 && first.getFullYear() % 100 !== 0) || first.getFullYear() % 400 === 0){
+            pageYear = leapYear;
+        }else{
+            pageYear = notLeapYear;
+        }
+
+        function showCalendar(){
+            let monthCnt = 100;
+            let cnt = 1;
+            for(let i = 0; i < 6; i++){
+                const $tr = document.createElement('tr');
+                $tr.setAttribute('id', monthCnt);   
+                for(let j = 0; j < 7; j++){
+                    if((i === 0 && j < first.getDay()) || cnt > pageYear[first.getMonth()]){
+                        const $td = document.createElement('td');
+                        $tr.appendChild($td);     
+                    }else{
+                        const $td = document.createElement('td');
+                        $td.textContent = cnt;
+                        $td.setAttribute('id', cnt);                
+                        $tr.appendChild($td);
+                        cnt++;
+                    }
+                }
+                monthCnt++;
+                calendarBody.appendChild($tr);
+            }
+            currentTitle.innerHTML = monthList[first.getMonth()] + '&nbsp;&nbsp;&nbsp;&nbsp;'+ first.getFullYear();
+        }
+        showCalendar();
+
+        function removeCalendar(){
+            let catchTr = 100;
+            for(let i = 100; i< 106; i++){
+                const $tr = document.getElementById(catchTr);
+                $tr.remove();
+                catchTr++;
+            }
+        }
+
+        function prev(){
+            if(pageFirst.getMonth() === 1){
+                pageFirst = new Date(first.getFullYear()-1, 12, 1);
+                first = pageFirst;
+                if((first.getFullYear() % 4 === 0 && first.getFullYear() % 100 !== 0) || first.getFullYear() % 400 === 0){
+                    pageYear = leapYear;
+                }else{
+                    pageYear = notLeapYear;
+                }
+            }else{
+                pageFirst = new Date(first.getFullYear(), first.getMonth()-1, 1);
+                first = pageFirst;
+            }
+            today = new Date(today.getFullYear(), today.getMonth()-1, 1);
+            if (today.getMonth() === thisDate.getMonth()) {
+                today = thisDate;
+            }
+            currentTitle.innerHTML = monthList[first.getMonth()] + '&nbsp;&nbsp;&nbsp;&nbsp;'+ first.getFullYear();
+            removeCalendar();
+            showCalendar();
+            clickedDate1 = document.getElementById(today.getDate());
+            clickedDate1.classList.add('active');
+            clickStart();
+        }
+
+        function next(){
+            if(pageFirst.getMonth() === 12){
+                pageFirst = new Date(first.getFullYear()+1, 1, 1);
+                first = pageFirst;
+                if((first.getFullYear() % 4 === 0 && first.getFullYear() % 100 !== 0) || first.getFullYear() % 400 === 0){
+                    pageYear = leapYear;
+                }else{
+                    pageYear = notLeapYear;
+                }
+            }else{
+                pageFirst = new Date(first.getFullYear(), first.getMonth()+1, 1);
+                first = pageFirst;
+            }
+            today = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            if (today.getMonth() === thisDate.getMonth()) {
+                today = thisDate;
+            }
+            console.log('next' + today);
+            currentTitle.innerHTML = monthList[first.getMonth()] + '&nbsp;&nbsp;&nbsp;&nbsp;'+ first.getFullYear();
+            removeCalendar();
+            showCalendar(); 
+            clickedDate1 = document.getElementById(today.getDate());
+            clickedDate1.classList.add('active');  
+            clickStart();
+        }
+
+        let clickedDate1 = document.getElementById(today.getDate());
+        clickedDate1.classList.add('active');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        prevBtn.addEventListener('click', prev);
+        nextBtn.addEventListener('click', next);
+        let tdGroup = [];
+
+        function clickStart(){
+            for(let i = 1; i <= pageYear[first.getMonth()]; i++){
+                tdGroup[i] = document.getElementById(i);
+                if (reCheckIn) {
+                    if ((i < reCheckIn.getDate() && first.getMonth() === reCheckIn.getMonth()) || first.getMonth() < reCheckIn.getMonth()) {
+                        tdGroup[i].setAttribute('class', 'before');
+                    }
+                } else {
+                    if ((i < thisDate.getDate() && first.getMonth() === thisDate.getMonth()) || first.getMonth() < thisDate.getMonth()) {
+                        tdGroup[i].setAttribute('class', 'before');
+                    }
+                }
+                tdGroup[i].addEventListener('click', changeToday);
+            }
+        }
+
+        function changeToday(e){
+            for(let i = 1; i <= pageYear[first.getMonth()]; i++){
+                if(tdGroup[i].classList.contains('active')){
+                    tdGroup[i].classList.remove('active');
+                }
+                if (e.currentTarget.className === 'before') {
+                    alert('해당 날짜는 선택할 수 없습니다. 다시 선택하십시오.');
+                    break;
+                }
+                clickedDate1 = e.currentTarget;
+                clickedDate1.classList.add('active');
+                today = new Date(today.getFullYear(), today.getMonth(), clickedDate1.id);
+            }
+        }
+        clickStart();
+
+        const btn = document.getElementById('nextbtn');
+        btn.addEventListener('click', checkOut);
+        const caption = document.getElementById('caption');
+        const buttons = document.getElementById('buttons');
+        let newBtn = document.getElementById('prevbtn');
+        newBtn.addEventListener('click', checkIn);
+        const calendar = document.querySelector('.calendar');
+        let ci, co, nights;
+
+        function checkOut() {
+            if (!reCheckIn) {
+                reCheckIn = today;
+                console.log('checkin' + moment(reCheckIn, "YYYY-MM-DD 15:00:00"));
+            }
+            removeCalendar();
+            showCalendar();
+            caption.textContent = "체크아웃";
+            btn.textContent = "완료";
+            if (newBtn.style.display != 'none') {
+                reCheckOut = today;
+                console.log('checkout' + moment(reCheckOut, "YYYY-MM-DD 11:00:00"));
+                if (reCheckIn.getFullYear() === reCheckOut.getFullYear() && reCheckIn.getMonth() === reCheckOut.getMonth() && reCheckIn.getDate() === reCheckOut.getDate()) {
+                    alert('숙박은 1박 이상 가능합니다. 날짜를 다시 선택하십시오.');
+                    btn.textContent = "다음";
+                    reCheckIn = null;
+                    reCheckOut = null;
+                    today = thisDate;
+                } else {
+                    ci = moment(reCheckIn);
+                    co = moment(reCheckOut);
+                    nights = co.diff(ci, "days");
+                    document.getElementById('checkchange').innerHTML = '';
+                    document.getElementById('checkchange').insertAdjacentHTML('afterbegin', `<input type="hidden" value="${ci.format("YYYY-MM-DD 15:00:00")}" name="reci">${ci.format("YYYY-MM-DD 11:00:00")} ~ <input type="hidden" value="${co.format("YYYY-MM-DD 11:00:00")}" name="reco">${co.format("YYYY-MM-DD 11:00:00")}<span class="lines" id="line">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span><input type="hidden" value="${nights}" name="nights" id="nights">${nights}&nbsp;박`);
+                    window.scrollTo(0, 0);
+                }
+                calendar.style.display = 'none';
+                btn.style.display = 'none';
+                newBtn.style.display = 'none';
+            } else {
+                today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                newBtn.style.display = 'inline-block'
+            }
+            console.log('today' + today);
+            clickedDate1 = document.getElementById(today.getDate());
+            clickedDate1.classList.add('active');  
+            clickStart();
+        }
+
+        function checkIn() {
+            reCheckIn = null;
+            caption.textContent = "체크인";
+            btn.textContent = "다음";
+            newBtn.style.display = 'none';
+            removeCalendar();
+            showCalendar();
+            today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            clickedDate1 = document.getElementById(today.getDate());
+            clickedDate1.classList.add('active');  
+            clickStart();
+        }
+
+        const openCal = document.getElementById('open-cal');
+        openCal.addEventListener('click', OpenCalendar);
+
+        function OpenCalendar() {
+            if (calendar.style.display === 'none') {
+                calendar.style.display = 'block';
+                btn.style.display = 'inline-block';
+                checkIn();
+            } else {
+                calendar.style.display = 'none';
+                btn.style.display = 'none';
+                newBtn.style.display = 'none';
+            }
+        }
+
+    let r = 'Deluxe';
+    const roomValue = (target) => {
+        r = target.value;
+        console.log(r);
+        if (r === 'Deluxe' || r === 'Superior') {
+            for (let i = 3; i <= 6; i++) {
+                const opt = document.getElementById(`opt${i}`);
+                opt.disabled = true;
+            }
+        } else if (r === 'Family') {
+            for (let i = 3; i <= 4; i++) {
+                const opt = document.getElementById(`opt${i}`);
+                opt.disabled = false;
+            }
+        } else {
+            for (let i = 3; i <= 6; i++) {
+                const opt = document.getElementById(`opt${i}`);
+                opt.disabled = false;
+            }
+        }
+    }
+
+    let people = 2;
+    const pplValue = (target) => {
+        people = Number(target.value);
+        console.log(people);
+    }
+    </script>
+</body>
+</html>

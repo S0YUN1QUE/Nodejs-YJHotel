@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/menu.css">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/menu.css">
+  <link rel="stylesheet" href="/aboutus.css">
+</head>
+<body>
+  {% include "header.html" %}
+  {% include "navigation.html" %}
+  <div id="container">
+    <h2 id="aboutus">ABOUT US</h2>
+    <p id="aboutgroup">조원 소개</p>
+    <div id="main">
+      {% if user and user.uauth == 'Admin' %}
+      <input type="checkbox" id='user-plus'>
+      <label for='user-plus' id="getmem">조원추가</label>
+        <form id="user-form" action="/about/aboutus" method="post" class="menubars">
+          <fieldset>
+            <legend>About Us</legend>
+            <!-- <form id="twit-form" method="post" enctype="multipart/form-data"> -->
+              <!-- <div class="input-group">
+                <textarea id="twit" name="content" maxlength="140"></textarea>
+              </div> -->
+              <div class="img-preview">
+                <img id="img-preview" src="" style="display: none;" width="250" alt="미리보기">
+                <input id="img-url" type="hidden" name="url">
+              </div>
+              <div>
+                <label id="img-label" for="img">사진 업로드&nbsp;</label>
+                <input name="img" id="img" type="file" accept="image/*">
+                <!-- <button id="twit-btn" type="submit" class="btn">짹짹</button> -->
+              </div>
+          <!-- </form> -->
+            <table>
+              <tr>
+                <td>학번&nbsp;</td>
+                <td><input name="gsnum" id="gsnum" type="text" placeholder="학번은 수정할 수 없습니다."></td>
+              </tr>
+              <tr>
+                <td>이름&nbsp;</td>
+                <td><input name="gname" id="gname" type="text" placeholder="이름"></td>
+              </tr>
+              <tr>
+                <td>생년월일&nbsp;</td>
+                <td><input name="gbirth" id="gbirth" type="date" placeholder="생년월일"></td>
+              </tr>
+              <tr>
+                <td>연락처&nbsp;</td>
+                <td><input name="gcontact" id="gcontact" type="text" placeholder="연락처"></td>
+              </tr>
+              <tr>
+                <td>이메일&nbsp;</td>
+                <td><input name="gemail" id="gemail" type="email" placeholder="이메일"></td>
+              </tr>
+              <tr>
+                <td>MBTI&nbsp;</td>
+                <td><input id="gmbti" type="text" placeholder="MBTI"></td>
+              </tr>
+              <tr>
+                <td>좋아하는 것&nbsp;</td>
+                <td><input name="glike" id="glike" type="text" placeholder="좋아하는 것"></td>
+              </tr>
+              <tr>
+                <td>담당 파트&nbsp;</td>
+                <td><input name="gpart" id="gpart" type="text" placeholder="담당 파트"></td>
+              </tr>
+            </table>
+            <button type="submit">등록</button>
+          </fieldset>
+        </form>
+        {% endif %}
+        {% if user and user.uauth == 'Admin' %}
+        {% for mem in gmembers %}
+        <form style="display: none;" id="update-form">
+          학번&nbsp;<input id="gsnum" type="text" value="{{mem.gsnum}}" disabled placeholder="{{mem.gsnum}}">
+          이름&nbsp;<input id="gname" type="text" placeholder="이름">
+          생년월일&nbsp;<input id="gbirth" type="date" placeholder="생년월일">
+          연락처&nbsp;<input id="gcontact" type="text" placeholder="연락처">
+          이메일&nbsp;<input id="gemail" type="email" placeholder="이메일">
+          MBTI&nbsp;<input id="gmbti" type="text" placeholder="MBTI">
+          좋아하는 것&nbsp;<input id="glike" type="text" placeholder="좋아하는 것">
+          담당 파트&nbsp;<input id="gpart" type="text" placeholder="담당 파트">
+          <button type="submit">입력</button>
+        </form>
+        {% endfor %}
+        {% endif %}
+      <br>
+    {% for mems in gmembers %}
+    <table class="user-list">
+        <tbody>
+      <!-- <tr><th><img src="/img/{{mems.img}}" alt="이미지" width="200"></th></tr> -->
+          <tr id="std_id_{{mems.gsnum}}">
+            <tr >
+              <td id="imgtd" rowspan="9"><img src="/img/{{mems.img}}" alt="이미지" width="200"></td>
+            </tr>
+            <tr>
+              <td class="infos">학번</td>
+              <td>{{mems.gsnum}}</td>
+            </tr>
+            <tr>
+              <td class="infos">이름</td>
+              <td>{{mems.gname}}</td>
+            </tr>
+            <tr>
+              <td class="infos">생년월일</td>
+              <td>{{mems.gbirth}}</td>
+            </tr>
+            <tr>
+              <td class="infos">연락처</td>
+              <td>{{mems.gcontact}}</td>
+            </tr>
+            <tr>
+              <td class="infos">이메일</td>
+              <td>{{mems.gemail}}</td>
+            </tr>
+            <tr>
+              <td class="infos">MBTI</td>
+              <td>{{mems.gmbti}}</td>
+            </tr>
+            <tr>
+              <td class="infos">좋아하는 것</td>
+              <td>{{mems.glike}}</td>
+            </tr>
+            <tr>
+              <td class="infos">담당 파트</td>
+              <td>{{mems.gpart}}</td>
+            </tr>
+            <tr>
+              {% if user and user.uauth === 'Admin' %}
+              <td colspan="3" class="btns"><button id="patch" onclick="tablePatchOnClick(`{{mems.gsnum}}`, `{{mems.gname}}`, `{{mems.gbirth}}`, `{{mems.gcontact}}`, `{{mems.gemail}}`, `{{mems.gmbti}}`, `{{mems.glike}}`, `{{mems.gpart}}`)">수정</button><button type="button" id="delete" onclick="tableDeleteOnClick(`{{mems.gsnum}}`)">삭제</button></td>
+              {% endif %}
+            </tr>
+          </tr>
+        </tbody>
+      </table>
+      {% endfor %}
+    </div>
+      {% include "footer.html" %}
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+      // 사용자 로딩
+      async function getUser() {
+        try {
+            const result = await axios.get('/about/aboutus');
+            const users = result.data;
+            console.log('사용자 조회', users);
+        } 
+        catch (err) {
+            console.error(err);
+        }
+      }
+      function tablePatchOnClick(gsnum, gname, gbirth, gcontact, gemail, gmbti, glike, gpart) {
+      // console.log(student_n);
+        const form = document.querySelector('#update-form');
+        form.style.display = 'block';
+        /* form.elements["gsnum"].value = gsnum;
+        form.elements["gname"].value = gname;
+        form.elements["gbirth"].value = gbirth;
+        form.elements["gcontact"].value = gcontact;
+        form.elements["gemail"].value = gemail;
+        form.elements["gmbti"].value = gmbti;
+        form.elements["glike"].value = glike;
+        form.elements["gpart"].value = gpart;*/
+      }
+
+      /*document.querySelector('#update-form').addEventListener('submit', async (event)=>{
+      event.preventDefault();
+      try {
+          const gmember = await axios.patch('/about/aboutus', {
+            gsnum: event.target.gsnum.value,
+            gname: event.target.gname.value,
+            gbirth: event.target.gbirth.value,
+            gcontact: event.target.gcontact.value,
+            gemail: event.target.gemail.value,
+            gmbti: event.target.gmbti.value,
+            glike: event.target.glike.value,
+            gpart: event.target.gpart.value,
+          });
+          location.reload();
+      }
+      catch(err) {
+          console.error(err);
+      }
+      });*/
+
+      async function tableDeleteOnClick(student_n) {
+      console.log(student_n);
+      try {
+          const result = await axios.delete('/about/aboutus', {
+          data: {
+              gsnum: student_n
+          }
+          });
+          console.log(result);
+          location.reload();
+          if(result.status === true) {
+          // 테이블의 특정 열을 삭제한다.
+          }
+      }
+      catch(err) {
+          // pass
+          console.error(err);
+      }
+      }
+
+      document.querySelector('#user-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const gsnum = event.target.gsnum.value;
+        const gname = event.target.gname.value;
+        const gbirth = event.target.gbirth.value;
+        const gcontact = event.target.gcontact.value;
+        const gemail = event.target.gemail.value;
+        const gmbti = event.target.gmbti.value;
+        const glike = event.target.glike.value;
+        const gpart = event.target.gpart.value;
+
+        if (!gsnum) {return alert('학번을 입력하세요');}
+        if (!gname) {return alert('이름를 입력하세요');}
+        if (!gbirth) {return alert('생년월일를 입력하세요');}
+        if (!gcontact) {return alert('연락처를 입력하세요');}
+        if (!gemail) {return alert('이메일를 입력하세요');}
+        if (!gmbti) {return alert('MBTI를 입력하세요');}
+        if (!glike) {return alert('좋아하는 것을 입력하세요');}
+        if (!gpart) {return alert('담당 파트를 입력하세요');}
+
+        try {
+          const result = await axios.post('/about/aboutus', { gsnum, gname, gbirth, gcontact, gemail, gmbti, glike, gpart });
+          console.log('사용자 등록', result.data);
+          getUser();
+          location.reload('/about/aboutus');
+        } 
+        catch (err) {
+            console.error(err);
+        }
+
+        event.target.gsnum.value = '';
+        event.target.gname.value = '';
+        event.target.gbirth.value = '';
+        event.target.gcontact.value = '';
+        event.target.gemail.value = '';
+        event.target.gmbti.value = '';
+        event.target.glike.value = '';
+        event.target.gpart.value = '';
+      });
+
+      if (document.getElementById('img')) { // document.querySelectorAll('#img')
+      document.getElementById('img').addEventListener('change', function(e) {
+          const formData = new FormData();
+          console.log(this, this.files);
+          formData.append('img', this.files[0]);
+          axios.post('/about/aboutus/img', formData)
+          .then((res) => {
+              document.getElementById('img-url').value = res.data.url;
+              document.getElementById('img-preview').src = res.data.url;
+              document.getElementById('img-preview').style.display = 'inline';
+          })
+          .catch((err) => {
+              console.error(err);
+          });
+      });
+      }
+      // console.log("req.bdoy", req.body);
+
+      // https://pastebin.com/TSs8zFpd
+  </script>
+</body>
+</html>

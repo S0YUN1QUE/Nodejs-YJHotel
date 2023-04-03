@@ -1,0 +1,186 @@
+#container {
+    position: absolute;
+    top: 150px;
+    width: 100%;
+}
+
+#aboutus {
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+#aboutgroup {
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+#user-plus {
+    display: none;
+}
+
+#user-plus:checked ~ .menubars {
+    display: block;
+}
+
+.menubars {
+    width: 80%;
+    padding: 2%;
+    margin: 2% 10%;
+    border: 1px solid #bcbcbc;
+    display: none;
+}
+
+.user-list {
+    width: 50%;
+    margin: 2% 25%;
+    text-align: center;
+    line-height: 32px;
+    border: 2px solid lightgrey;
+    border-radius: 20px;
+    padding: 2%;
+}
+
+#imgtd {
+    padding-top: 1.5%;
+    width: 40%;
+    vertical-align: top;
+}
+
+.user-list td {
+    width: 30%;
+    font-size: 18px;
+}
+
+.infos {
+    font-weight: bold;
+    /* border-left: 2px solid grey; */
+    border-right: 2px solid grey;
+}
+
+.btns {
+    line-height: 80px;
+    text-align: center;
+}
+
+.btns > button {
+    margin: 2% 5%;
+    background-color: black;
+    padding: 10px 20px;
+    line-height: 20px;
+    border-radius: 10px 10px;
+    font-size: 18px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+/* #user-plus { 
+    width: 580px;
+    padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    border: 1px solid #bcbcbc;
+    display: none;
+  }
+
+#user-plus:checked ~ .menubars { 
+    width: 580px;
+    padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    border: 1px solid #bcbcbc;
+    display: block; 
+} 
+.menubars { 
+    width: 580px;
+    padding: 20px;
+    margin-bottom: 20px;
+    float: left;
+    border: 1px solid #bcbcbc;
+    display: none; 
+}
+@media ( max-width: 480px ) {
+    #user-plus {
+      width: auto;
+    }
+    #user-plus:checked ~ .menubars {
+        width: auto;
+    }
+    .menubars {
+        width: auto;
+    }
+}
+
+#main {
+    width: 100%;
+    margin: 5%;
+} */
+
+/* main > h2 {
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 48px;
+    line-height: 100px;
+}
+
+#board {
+    width: 100%;
+}
+
+#boardtable {
+    margin: auto;
+    width: 85%;
+}
+
+.postinfo {
+    position: relative;
+    float: left;
+    margin: 1% 2%;
+}
+
+.postTitle > th {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 32px;
+    padding: 1% 0;
+    border-top: 4px solid black;
+    border-bottom: 1px solid black;
+}
+
+.postContent > td {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    padding: 2%;
+    border-bottom: 1px solid grey;
+}
+
+.attach > td {
+    padding: 1%;
+    border-bottom: 1px solid grey;
+}
+
+.cmenu > td {
+    padding: 1%;
+    border-bottom: 1px solid gray;
+}
+
+.plist > td {
+    width: 30%;
+    padding: 1%;
+}
+
+.plist > td > a {
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+}
+
+#list {
+    text-align: center;
+}
+
+#next {
+    text-align: right;
+} */

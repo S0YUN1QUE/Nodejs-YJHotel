@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/reservation.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'navigation.html' %}
+    <div id="container">
+        <div id="reserv-title">
+            <h2>RESERVATION</h2>
+        </div>
+        <div class="reserv-container">
+            <div class="reserv-wrap">
+                <div id="myreserv-wrap">
+                    <a href="/reservation/myreserv" id="myreserv">나의 예약 조회</a>
+                </div>
+                <div id="book-wrap">
+                    <a href="/reservation/book" id="book">객실 예약하기</a>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+</body>
+</html>

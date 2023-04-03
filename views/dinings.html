@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/dinings.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {% include 'header.html' %} {% include 'navigation.html' %}
+    <div id="dinings-container">
+        <div id="dinings-title"><span id="dinings-span">DININGS</span><br><span id="dinings-all">전체 보기</span></div>
+        <div id="dinings-wrapper">
+            <div class="dinings" id="section1">
+                <div class="dinings-info">
+                    <span class="dining-type">RESTAURANT</span><br>
+                    <span class="description">HotelYJ가 자랑하는 시푸드 레스토랑 "웨이브"</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">FIRST FLOOR</span><br>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">CAPACITY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">총 82석</span><br>
+                        <span class="types">BREAKFAST</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">07:30 ~ 10:00</span><br>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">11:00 ~ 22:00</span><br>
+                    </div>
+                </div>
+            </div>
+            <div class="dinings" id="section2">
+                <div class="dinings-info">
+                    <span class="dining-type">LOUNGE & BAR</span><br>
+                    <span class="description">빛나는 야경과 여유로운 저녁을 함께 즐길 수 있는 라운지&바</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">SIXTH FLOOR</span><br>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">CAPACITY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">총 56석</span><br>
+                        <span class="types">DAY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">10:00 ~ 18:00</span><br>
+                        <span class="types">NIGHT</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">18:00 ~ 24:00</span><br>
+                        <span id="caution">* 20:00 이후 미성년자 출입이 제한됩니다.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dinings" id="section3">
+                <div class="dinings-info">
+                    <span class="dining-type">CAFE</span><br>
+                    <span class="description">편안한 휴식과 정성이 담긴 디저트를 맛볼 수 있는 카페</span><br>
+                    <div>
+                        <span class="types">LOCATION</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">GROUND FLOOR</span><br>
+                        <span class="types">INQUIRY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">000-000-0000</span><br>
+                        <span class="types">CAPACITY</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">총 42석</span><br>
+                        <span class="types">HOURS</span><span class="line">&nbsp;|&nbsp;</span><span class="type-c">10:00 ~ 21:00</span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

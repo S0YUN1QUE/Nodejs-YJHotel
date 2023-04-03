@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body> 
+    <div id="container">
+        {% include "header.html" %}
+        <div id="background">
+            {% include "navigation.html" %}
+            {% include "main-content.html" %}
+        </div>
+        {% include "footer.html" %}
+    </div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    let index = 0;
+    
+    function randomimg() {
+        const img = ["url(img1.jpg)", "url(img3.jpg)", "url(img3.jpg)", "url(img4.jpg)", "url(img5.jpg)"];
+        document.getElementById('background').style.backgroundImage = img[index];
+        setTimeout(function() { randomimg() }, 3000);
+        index++;
+        if (index > img.length) {
+            index = 0;
+        }
+    }
+
+    function startAnimation() {
+        window.setTimeout(randomimg, 3000);
+    }
+
+    window.onload = startAnimation;
+</script>
+</html>
